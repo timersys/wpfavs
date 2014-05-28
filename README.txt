@@ -14,7 +14,7 @@ Wpfavs is a bulk plugin installation / activation tool that let you import your 
 
 Wpfavs is a bulk plugin installation / activation tool that let you import your plugins lists (aka wpfavs) from [http://wpfavs.com](http://wpfavs.com)
 
-You can either go to WpFavs site and register an account to create your own lists or you can browse other users existing lists and use them.
+You can either go to WpFavs site and [register an account](http://wpfavs.com/wp-login.php?action=register) to create your own lists or you can [browse](http://wpfavs.com/wpfavs) other users existing lists and use them.
 
 With the Wpfavs plugin you can bulk install, delete or active plugins. It's a great tool for developers that install dozens of Wordpress Sites every month.
 
