@@ -1,0 +1,23 @@
+/* This stylesheet is used to style the admin option form of the plugin. */
+.wrap h2 {
+	border-bottom: 1px solid #ccc;
+}
+#wpfavs-form {
+	margin: 30px 0;
+}
+#wpfavs-form h4 {
+	margin-bottom: 5px;
+}
+
+#wplists {
+	border-top: 1px solid #ccc;
+	padding-top: 20px;
+	font-size: 14px;
+}
+#wplists .loading{
+	display: none;
+}
+#wplists .spin {
+	margin-left: 4px;
+	margin-bottom: -4px;
+}
