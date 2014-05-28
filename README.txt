@@ -69,9 +69,3 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 
 = 1.0.0 =
 * First release
-
-
-== Updates ==
-
-The basic structure of this plugin was cloned from the [WordPress-Plugin-Boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate) project.
-This plugin supports the [GitHub Updater](https://github.com/afragen/github-updater) plugin, so if you install that, this plugin becomes automatically updateable direct from GitHub. Any submission to WP.org repo will make this redundant.
