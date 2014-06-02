@@ -39,7 +39,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	public $api_url = 'http://local.dev/wplists/';
+	public $api_url = 'http://wpfavs.com/';
 
 	/**
 	 * The variable name is used as the text domain when internationalizing strings
