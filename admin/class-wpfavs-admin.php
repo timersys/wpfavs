@@ -396,12 +396,6 @@ class Wpfavs_Admin {
         //quickkey
         $wpfav_wordpress_username = $_POST['api_key'];
 
-        // Data to send to the API
-		$api_params = array(
-			'api_key' 		=> $wpfav_quickkey,
-			'wpfav_action'	=> 'wpfav_get_quick_list',
-		);
-
 		$api_data = $this->wordpress_api('query_plugins', array('user' => $wpfav_wordpress_username));
 		$api_plugins = $api_data->plugins;
 		$plugins_prepared = array();
