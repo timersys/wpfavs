@@ -22,6 +22,9 @@
 	<h4>Quick Key</h4>
 	<input type="text" name="wpfav_quickuse" id="wpfav_quickkey" placeholder="<?php _e( 'Insert Wp Fav quick use key to load just one list', $this->plugin_slug );?>" class="regular-text" value="<?php echo $this->quick_key;?>" />
 	<input class="button-primary wpfav_apikey-button" data-what="quickkey" type="submit" value="<?php _e( 'Quick Load', $this->plugin_slug );?>" name="Submit" autocomplete="off">
+	<h4>Wordpress.org username</h4>
+	<input type="text" name="wpfav_wordpress_username" id="wpfav_wordpress_username" placeholder="<?php _e( 'Insert wordpress.org username to load your favorite plugins', $this->plugin_slug );?>" class="regular-text" value="<?php echo $this->wordpress_username;?>" />
+	<input class="button-primary wpfav_apikey-button" data-what="wordpress_username" type="submit" value="<?php _e( 'Load my Favorites', $this->plugin_slug );?>" name="Submit" autocomplete="off">
 </form>
 
 <div id="wplists">

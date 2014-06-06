@@ -112,6 +112,7 @@ class Wpfavs_Admin {
 		//Ajax actions
 		add_action( 'wp_ajax_wpfav_apikey', array( $this, 'wpfav_apikey_cb' ) );
 		add_action( 'wp_ajax_wpfav_quickkey', array( $this, 'wpfav_quickkey_cb' ) );
+		add_action( 'wp_ajax_wpfav_wordpress_username', array( $this, 'get_wordpress_favorite_plugins' ) );
 
 		//load options
 		$this->load_wpfav_options();
@@ -347,7 +348,84 @@ class Wpfavs_Admin {
 		if( isset( $response['error'] ) ) {
   			echo self::message_box( $response['error'] );
   			die();
-		} 
+		}
+
+		// If we made it to here let's save it and load our table class
+		update_option( $this->plugin_slug . 'wpfav_quickkey', $wpfav_quickkey );
+
+		self::print_table( $response );
+
+		die();
+	}
+
+	/**
+	 * Make a remote call to the wordpress.com API to get the favorite plugins
+	 *
+	 * @since    1.0.1
+	 */
+	public function wordpress_api($action, $args) {
+    if (is_array($args)) $args = (object)$args;
+
+    $error_msg = 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.';
+
+    $request = wp_remote_post('http://api.wordpress.org/plugins/info/1.0/', array('timeout' => 15, 'body' => array('action' => $action, 'request' => serialize($args))));
+    if (is_wp_error($request)) {
+        $res = new WP_Error('plugins_api_failed', __($error_msg), $request->get_error_message());
+    } else {
+        $res = maybe_unserialize(wp_remote_retrieve_body($request));
+        if (!is_object($res) && !is_array($res)){
+        	$res = new WP_Error('plugins_api_failed', __($error_msg), wp_remote_retrieve_body($request));
+        }
+    }
+
+    return apply_filters('c3m_favorite_results', $res, $action, $args);
+	}
+
+	/**
+	 * Ajax function that gets the wordpress.org username and
+	 * do the remote call to retrieve the favorite plugins from wordpress.org
+	 *
+	 * @since    1.0.1
+	 */
+	public function get_wordpress_favorite_plugins() {
+
+		$nonce = $_POST['nonce'];
+        if ( ! wp_verify_nonce( $nonce, 'wpfav-nonce' ) )
+        	die ( 'Wrong nonce!');
+
+        //quickkey
+        $wpfav_wordpress_username = $_POST['api_key'];
+
+        // Data to send to the API
+		$api_params = array(
+			'api_key' 		=> $wpfav_quickkey,
+			'wpfav_action'	=> 'wpfav_get_quick_list',
+		);
+
+		$api_data = $this->wordpress_api('query_plugins', array('user' => $wpfav_wordpress_username));
+		$api_plugins = $api_data->plugins;
+		$plugins_prepared = array();
+		$i = 0;
+		foreach($api_plugins as $plugin){
+			$tempPluginArray = array(
+				'id' => $i,
+				'title' => $plugin->name,
+        'slug' => $plugin->slug,
+        'link' => $plugin->homepage,
+        'dlink' => 'https://downloads.wordpress.org/plugin/' . $plugin->slug . '.' . $plugin->version . '.zip',
+        'last_updated' => 'unknown',
+        'version' => $plugin->version
+				);
+			$plugins_prepared[] = $tempPluginArray;
+			$i++;
+		}
+		$response = array('0' => array(
+				'title' => 'My Favorites',
+				'id' => 0,
+				'description' => 'My Favorites',
+				'link' => 'https://profiles.wordpress.org/' . $wpfav_wordpress_username,
+				'plugins' => $plugins_prepared
+			) );
 
 		// If we made it to here let's save it and load our table class
 		update_option( $this->plugin_slug . 'wpfav_quickkey', $wpfav_quickkey );
