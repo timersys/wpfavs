@@ -1,24 +1,26 @@
-=== Wpfavs - Bulk plugin installation ===
+=== Wp Favs - Bulk plugin installation ===
 Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
-Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins
+Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer
 Requires at least: 3.6
 Tested up to: 3.9.1
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Wpfavs is a bulk plugin installation / activation tool that let you import your plugins lists from http://wpfavs.com
+Wpfavs is a bulk plugin installation / activation tool that let you import your plugins lists from http://wpfavs.com 
 
 == Description ==
 
-Wpfavs is a bulk plugin installation / activation tool that let you import your plugins lists (aka wpfavs) from [http://wpfavs.com](http://wpfavs.com)
+Wp Favs is a bulk plugin installation / activation tool that let you import your plugins lists (aka Wp Favs) from [http://wpfavs.com](http://wpfavs.com)
 
-You can either go to WpFavs site and [register an account](http://wpfavs.com/wp-login.php?action=register) to create your own lists or you can [browse](http://wpfavs.com/wpfavs) other users existing lists and use them.
+You can either go to Wp Favs site and [register an account](http://wpfavs.com/wp-login.php?action=register) to create your own lists or you can [browse](http://wpfavs.com/wpfavs) other users existing lists and use them.
 
 With the Wpfavs plugin you can bulk install, delete or active plugins. It's a great tool for developers that install dozens of Wordpress Sites every month.
 
 Once installed simple go to Tools -> Wpfavs 
+
+You can read a tutorial on to use the plugin in [Tuts+](http://code.tutsplus.com/articles/install-multiple-wordpress-plugins-in-just-a-few-clicks--cms-21311)
 
 == Installation ==
 
