@@ -86,6 +86,10 @@ class Wpfavs_Table extends WP_List_Table {
             'edit'    => sprintf('<a href="' . $wpfav->api_url . 'my-wpfavs/edit/%s/" target="_blank">Edit Wp Fav</a>',$item['id']),
             'run' => sprintf('<a href="?page=%s&action=%s&wpfav=%s">Run this list</a>',$wpfav->plugin_slug,'run-wpfav',$item['id']),
         );
+        
+        //If we are importing wp user favorites remove edit from actions
+		if( 7331 === $item['id'] )
+			unset( $actions['edit'] );
 
   		return sprintf('%1$s %2$s', $item['title'], $this->row_actions($actions) );
 	}

@@ -16,21 +16,21 @@
 
 
 
-<div id="wplists">
+
 <a href="<?php echo admin_url( 'tools.php?page='. $this->plugin_slug );?>">&larr; Go Back</a>
-	<div id="wpfav-response">
-		<form id="wpfavs" method="post">
-		<?php if( !empty( $_GET['wpfav'] ) ) {
+<div id="wpfav-response">
+	<form id="wpfavs" method="post">
+	<?php if( !empty( $_GET['wpfav'] ) ) {
 
-			Wpfavs_Admin::print_plugins_table( $this->api_key_response[$_GET['wpfav']]['plugins'] );
+		Wpfavs_Admin::print_plugins_table( $this->api_key_response[$_GET['wpfav']]['plugins'] );
 
-		} else {
+	} else {
 
-			echo $this->message_box( 'error', __( "You didn't selected a Wp Fav to show", $this->plugin_slug ) );
+		echo $this->message_box( 'error', __( "You didn't selected a Wp Fav to show", $this->plugin_slug ) );
 
-		}
-		?>
-		</form>
-	</div>
-
+	}
+	?>
+	</form>
 </div>
+
+

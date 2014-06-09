@@ -416,15 +416,17 @@ class Wpfavs_Admin {
 			
 		}
 
-		$response = apply_filters( 'wpfav_wp_user_response', array(
+		$response = apply_filters( 'wpfav_wp_user_response',
 			array(
-				'title' 		=> __( 'Wordpress.org Favorites', $this->plugin_slug ),
-				'id' 			=> '',
-				'description' 	=> __( sprintf('%s\'s favorites plugins in Wordpress.org', $wpfav_wp_username ), $this->plugin_slug ),
-				'link' 			=> 'https://profiles.wordpress.org/' . $wpfav_wp_username,
-				'plugins' 		=> $plugins,
+				7331 => array(
+							'title' 		=> __( 'Wordpress.org Favorites', $this->plugin_slug ),
+							'id' 			=> 7331,
+							'description' 	=> __( sprintf('%s\'s favorites plugins in Wordpress.org', $wpfav_wp_username ), $this->plugin_slug ),
+							'link' 			=> 'https://profiles.wordpress.org/' . $wpfav_wp_username,
+							'plugins' 		=> $plugins,
+						) 
 			) 
-		) );
+		);
 
 		// If we made it to here let's save the user and load our table class
 		update_option( $this->plugin_slug . 'wpfav_wpuser', $wpfav_wp_username );
@@ -541,7 +543,7 @@ class Wpfavs_Admin {
         return '';
 
     }
-    
+
     /**	
      * We check that we are on the options page on our plugin
      * @return boolean True if we are in our plugin's page
