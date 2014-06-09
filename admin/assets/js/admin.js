@@ -21,6 +21,18 @@
 			});
 
 		});
+		//Prevent form submission with enter key
+		$("#wpfavs-form").keypress( function( e ){
+		    if( e.keyCode == 13 ){
+		        return false;
+		    }
+		});
+		//If enter is pressed click button
+		$('#wpfavs-form .regular-text').keyup( function( e ){
+			if( e.keyCode == 13 ){
+		       $(this).next('.wpfav_apikey-button').click();
+		    }
+		});
 
 	});
 
