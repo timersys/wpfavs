@@ -24,7 +24,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.0.1';
+	const VERSION = '1.0.2';
 	
 	/**
 	 * API Url to do the remote calls
@@ -81,6 +81,15 @@ class Wpfavs_Admin {
 	 * @var string
 	 */
 	var $api_key_reponse = '';
+
+	/**
+	 * Holds WordPress response(transient)
+	 *
+	 * @since 1.0.2
+	 * 
+	 * @var string
+	 */
+	var $wp_reponse = '';
 
 	/**
 	 * Initialize the plugin by loading admin scripts & styles and adding a
@@ -168,6 +177,7 @@ class Wpfavs_Admin {
 			$this->quick_key 		= get_option( $this->plugin_slug . 'wpfav_quickkey' );
 			$this->wp_user 			= get_option( $this->plugin_slug . 'wpfav_wpuser' );
 			$this->api_key_response = unserialize( get_transient( $this->plugin_slug . 'wpfav_apikey_response') );
+			$this->wp_response 		= unserialize( get_transient( $this->plugin_slug . 'wpfav_wp_response') );
 			//we update installed plugins
 			if( !empty( $this->api_key_response ) )
 				$this->populate_file_path();
@@ -430,6 +440,9 @@ class Wpfavs_Admin {
 
 		// If we made it to here let's save the user and load our table class
 		update_option( $this->plugin_slug . 'wpfav_wpuser', $wpfav_wp_username );
+
+		//Save to the db
+		set_transient( $this->plugin_slug . 'wpfav_wp_response', serialize($response), 30 * DAY_IN_SECONDS );
 
 		self::print_table( $response );
 

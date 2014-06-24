@@ -22,7 +22,16 @@
 	<form id="wpfavs" method="post">
 	<?php if( !empty( $_GET['wpfav'] ) ) {
 
-		Wpfavs_Admin::print_plugins_table( $this->api_key_response[$_GET['wpfav']]['plugins'] );
+		//We are showing Wp favorites
+		if( '7331' == $_GET['wpfav'] ) {
+
+			Wpfavs_Admin::print_plugins_table( $this->wp_response[$_GET['wpfav']]['plugins'] );
+			
+		} else {
+
+			Wpfavs_Admin::print_plugins_table( $this->api_key_response[$_GET['wpfav']]['plugins'] );
+
+		}
 
 	} else {
 
