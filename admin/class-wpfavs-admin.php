@@ -24,7 +24,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.0.2';
+	const VERSION = '1.0.3';
 	
 	/**
 	 * API Url to do the remote calls
@@ -180,7 +180,10 @@ class Wpfavs_Admin {
 			$this->wp_response 		= unserialize( get_transient( $this->plugin_slug . 'wpfav_wp_response') );
 			//we update installed plugins
 			if( !empty( $this->api_key_response ) )
-				$this->populate_file_path();
+				$this->populate_file_path( $this->api_key_response );
+
+			if( !empty( $this->wp_response ) )
+				$this->populate_file_path( $this->wp_response );
 
 		}
 	}
@@ -321,7 +324,7 @@ class Wpfavs_Admin {
 		// If we made it to here let's save it and load our table class
 		update_option( $this->plugin_slug . 'wpfav_apikey', $wpfav_apikey );
 
-		set_transient( $this->plugin_slug . 'wpfav_apikey_response', serialize($response), 30 * DAY_IN_SECONDS );
+		set_transient( $this->plugin_slug . 'wpfav_apikey_response', serialize($response), 15 * DAY_IN_SECONDS );
 
 		self::print_table( $response );
 
@@ -363,6 +366,7 @@ class Wpfavs_Admin {
 		// Decode response
 		$response = apply_filters( 'wpfav_quickkey_response', json_decode( wp_remote_retrieve_body( $response ), TRUE ) );
 
+
 		//check for api errors
 		if( isset( $response['error'] ) ) {
   			echo self::message_box( $response['error'] );
@@ -371,6 +375,8 @@ class Wpfavs_Admin {
 
 		// If we made it to here let's save it and load our table class
 		update_option( $this->plugin_slug . 'wpfav_quickkey', $wpfav_quickkey );
+
+		set_transient( $this->plugin_slug . 'wpfav_apikey_response', serialize($response), 15 * DAY_IN_SECONDS );
 
 		self::print_table( $response );
 
@@ -412,9 +418,9 @@ class Wpfavs_Admin {
 		}
 		// prepare plugins array
 		foreach( $response->plugins as $plugin ) {
-			
+			$i++;
 			$temp_a = array(
-				'ID' 			=> $i++,
+				'id' 			=> $i,
 				'title' 		=> $plugin->name,
 		        'slug' 			=> $plugin->slug,
 		        'link' 			=> 'http://wpfavs.com/plugin/' . $plugin->slug .'/',
@@ -422,7 +428,7 @@ class Wpfavs_Admin {
 		        'last_updated' 	=> 'unknown',
 		        'version' 		=> $plugin->version
 				);
-			$plugins[] = $temp_a;
+			$plugins[$i] = $temp_a;
 			
 		}
 
@@ -442,7 +448,7 @@ class Wpfavs_Admin {
 		update_option( $this->plugin_slug . 'wpfav_wpuser', $wpfav_wp_username );
 
 		//Save to the db
-		set_transient( $this->plugin_slug . 'wpfav_wp_response', serialize($response), 30 * DAY_IN_SECONDS );
+		set_transient( $this->plugin_slug . 'wpfav_wp_response', serialize($response), 3 * DAY_IN_SECONDS );
 
 		self::print_table( $response );
 
@@ -499,31 +505,31 @@ class Wpfavs_Admin {
 	
      /**
      * Set file_path key for each installed plugin.
-     *
+     * @param array Api or Wp aki response that contains plugins on the list
      * @since 1.0.0
      */
-    protected function populate_file_path() {
+    protected function populate_file_path( &$response ) {
 
         // Add file_path key for all plugins.
-        foreach ( $this->api_key_response as $key => $wpfav ) {
+        foreach ( $response as $key => $wpfav ) {
 
         	foreach ( $wpfav['plugins'] as $p_key => $plugin ) {
 
             	$file_path = $this->_get_plugin_basename_from_slug( $plugin['slug'] );
 
-            	$this->api_key_response[$key]['plugins'][$p_key]['file_path'] = $file_path;
+            	$response[$key]['plugins'][$p_key]['file_path'] = $file_path;
 
             	if( empty( $file_path ) ) {
 
-					$this->api_key_response[$key]['plugins'][$p_key]['status'] = 'not-installed';
+					$response[$key]['plugins'][$p_key]['status'] = 'not-installed';
 
 				} elseif( is_plugin_active( $file_path ) ) {
 
-					$this->api_key_response[$key]['plugins'][$p_key]['status'] = 'active';
+					$response[$key]['plugins'][$p_key]['status'] = 'active';
 
 				} else {
 
-					$this->api_key_response[$key]['plugins'][$p_key]['status'] = 'inactive';
+					$response[$key]['plugins'][$p_key]['status'] = 'inactive';
 				}
         	}
         }

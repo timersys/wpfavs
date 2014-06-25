@@ -86,7 +86,8 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 
 
 			// Install a single plugin
-			if( isset( $_GET['plugin_id'] ) && 'install' == $_GET['action'] ) {
+			if( !isset( $_POST['plugin'] ) && isset( $_GET['plugin_id'] ) && 'install' == $_GET['action'] ) {
+
 
 				// Create a new instance of Plugin_Upgrader.
 	            $upgrader = new Plugin_Upgrader ( $skin = new WpFavs_Plugin_Installer_Skin( ) );
@@ -129,7 +130,7 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 		if( 'activate' === $this->current_action() ) {
 
 			// Activate a single plugin
-			if( isset( $_GET['plugin_id'] ) && 'activate' == $_GET['action'] ) {
+			if( !isset( $_POST['plugin'] ) && isset( $_GET['plugin_id'] ) && 'activate' == $_GET['action'] ) {
 
 				activate_plugins( $this->plugins[$_GET['plugin_id']]['file_path'] );
 	            
@@ -162,7 +163,7 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 		if( 'deactivate' === $this->current_action() ) {
 
 			// Deactivate a single plugin
-			if( isset( $_GET['plugin_id'] ) && 'deactivate' == $_GET['action'] ) {
+			if( !isset( $_POST['plugin'] ) && isset( $_GET['plugin_id'] ) && 'deactivate' == $_GET['action'] ) {
 
             	deactivate_plugins( $this->plugins[$_GET['plugin_id']]['file_path'] );
 	            
@@ -232,7 +233,9 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 	 */
 	function column_cb( $item ) {
 
+		
 		$cb = ! empty( $item['file_path'] ) ? $item['file_path'] : $item['id'];
+		
         return sprintf(
             '<input type="checkbox" name="plugin[]" value="%s" />', $cb
         );    

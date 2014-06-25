@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer
 Requires at least: 3.6
 Tested up to: 3.9.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,11 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 3. When you run a list you get to the plugins of the Wpfav
 
 == Changelog ==
+
+= 1.0.3 =
+
+* Fixed bug preventing quick key or WP import list to work properly
+* Fixed bug that some plugin where installed when not selected for install
 
 = 1.0.2 =
 
