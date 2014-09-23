@@ -12,7 +12,7 @@
  * Plugin Name:       Wp Favs
  * Plugin URI:        http://wp.timersys.com
  * Description:       Create and import your favorites plugins lists from wpfavs.com
- * Version:           1.0.3
+ * Version:           1.0.5
  * Author:            Damian Logghe
  * Author URI:        http://wp.timersys.com
  * Text Domain:       wpfavs

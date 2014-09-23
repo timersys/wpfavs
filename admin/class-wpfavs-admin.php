@@ -24,7 +24,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.0.3';
+	const VERSION = '1.0.5';
 	
 	/**
 	 * API Url to do the remote calls
@@ -307,7 +307,7 @@ class Wpfavs_Admin {
 		
 		// Make sure there are no errors
 		if ( is_wp_error( $response ) ) {
-			$error_string = $result->get_error_message();
+			$error_string = $response->get_error_message();
   			echo self::message_box( $error_string );
   			die();
 		}
@@ -512,25 +512,27 @@ class Wpfavs_Admin {
 
         // Add file_path key for all plugins.
         foreach ( $response as $key => $wpfav ) {
+        	if( !empty( $wpfav['plugins'] ) ) {
+        		
+	        	foreach ( $wpfav['plugins'] as $p_key => $plugin ) {
 
-        	foreach ( $wpfav['plugins'] as $p_key => $plugin ) {
+	            	$file_path = $this->_get_plugin_basename_from_slug( $plugin['slug'] );
 
-            	$file_path = $this->_get_plugin_basename_from_slug( $plugin['slug'] );
+	            	$response[$key]['plugins'][$p_key]['file_path'] = $file_path;
 
-            	$response[$key]['plugins'][$p_key]['file_path'] = $file_path;
+	            	if( empty( $file_path ) ) {
 
-            	if( empty( $file_path ) ) {
+						$response[$key]['plugins'][$p_key]['status'] = 'not-installed';
 
-					$response[$key]['plugins'][$p_key]['status'] = 'not-installed';
+					} elseif( is_plugin_active( $file_path ) ) {
 
-				} elseif( is_plugin_active( $file_path ) ) {
+						$response[$key]['plugins'][$p_key]['status'] = 'active';
 
-					$response[$key]['plugins'][$p_key]['status'] = 'active';
+					} else {
 
-				} else {
-
-					$response[$key]['plugins'][$p_key]['status'] = 'inactive';
-				}
+						$response[$key]['plugins'][$p_key]['status'] = 'inactive';
+					}
+	        	}
         	}
         }
 

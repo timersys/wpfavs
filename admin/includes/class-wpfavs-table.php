@@ -68,8 +68,14 @@ class Wpfavs_Table extends WP_List_Table {
 	 */
 	function column_plugins( $item ) {
 
-		foreach( $item['plugins'] as $p ) {
-			echo '<a href="' . $p['link'] . '" target="_blank">'. $p['title'] .'</a><br />';
+		if( !empty( $item['plugins'] ) ) {
+
+			foreach( $item['plugins'] as $p ) {
+				echo '<a href="' . $p['link'] . '" target="_blank">'. $p['title'] .'</a><br />';
+			}
+
+		} else {
+			 _e( 'This list has not plugins yet', $this->plugin_slug );
 		}
 
 	}

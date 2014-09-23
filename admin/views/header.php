@@ -37,9 +37,15 @@
 						<li><a href="http://wpfavs" target="_blank"><?php _e( 'Write about Wp Favs on your blog', $this->plugin_slug );?></a></li>
 						<li><a href="http://twitter.com/intent/tweet/?text=I+am+using+Wp+Favs+on+my+WordPress+site.+It%27s+great%21&amp;via=chifliiii&amp;url=http%3A%2F%2Fwordpress.org%2Fplugins%2Fwpfavs%2F" target="_blank"><?php _e( 'Tweet about Wp Favs', $this->plugin_slug );?></a></li>
 						<li><a href="http://wordpress.org/plugins/wpfavs/#compatibility"><?php _e( 'Vote "works" on the WordPress.org plugin page', $this->plugin_slug );?></a></li>
+						<li><?php _e( 'Translate it to your language!', $this->plugin_slug );?></li>
 					</ul>
 				</div>
 			</div>	
-
+			<div class="postbox ">
+				<h3 class="hndle"><span><?php _e( 'Leave Feedback', $this->plugin_slug );?></span></h3>
+				<div class="inside">
+					<p><?php echo sprintf( __( 'Please send me your feedback by going to <a href="%s">Timersys site</a>', $this->plugin_slug ), 'http://wp.timersys.com/contact-us/');?></p>
+				</div>
+			</div>		
 
 		</div>	
