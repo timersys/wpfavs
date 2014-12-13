@@ -19,13 +19,20 @@ class Wpfavs_Table extends WP_List_Table {
 	 */
 	var $columns;
 
-
+	/**
+	 * Function to set items and avoid stric standard notice
+	 * @return  void
+	 */
+	function set_items( $items ) {
+		
+		$this->items 			= $items;
+	}
 
 	/**
 	 * Prepare all the items to be displayed
 	 * @return void
 	 */
-	function prepare_items( $items ) {
+	function prepare_items() {
 	  
 		
 		$hidden 				= array();
@@ -37,8 +44,7 @@ class Wpfavs_Table extends WP_List_Table {
 		);
 
 		$this->_column_headers 	= array($columns, $hidden, $sortable);
-		
-		$this->items 			= $items;
+
 	
 	}
 
@@ -127,4 +133,3 @@ class Wpfavs_Table extends WP_List_Table {
         return -$result;
 	}
 }
-

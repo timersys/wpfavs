@@ -24,7 +24,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.0.5';
+	const VERSION = '1.0.6';
 	
 	/**
 	 * API Url to do the remote calls
@@ -467,7 +467,8 @@ class Wpfavs_Admin {
 
 		$myList = new Wpfavs_Table( array('screen' => 'wpfavs' ) );
 
-		$myList->prepare_items( $items );
+		$myList->set_items( $items );
+		$myList->prepare_items();
 		$myList->display(); 
 	}
 
@@ -483,7 +484,8 @@ class Wpfavs_Admin {
 
 		$myList = new Wpfavs_Plugins_Table( array('screen' => 'wpfavs' ) );
 
-		$myList->prepare_items( $items );
+		$myList->set_items( $items );
+		$myList->prepare_items();
 		$myList->display(); 
 	}
 

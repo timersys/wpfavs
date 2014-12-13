@@ -27,15 +27,21 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 	 */
 	var $plugins;
 
-
+	/**
+	 * Function to set items and avoid stric standard notice
+	 * @return  void
+	 */
+	function set_items( $items ) {
+		
+		$this->plugins 			= $items;
+	}
 
 	/**
 	 * Prepare all the items to be displayed
 	 * @return void
 	 */
-	function prepare_items( $items ) {
+	function prepare_items() {
 	  
-		$this->plugins 			= $items;
 		$hidden 				= array();
 		$sortable 				= array();
 		$columns = array(
@@ -65,6 +71,7 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 	    'install'    => 'Install',
 	    'activate'   => 'Activate',
 	    'deactivate' => 'Deactivate',
+	    'delete' 	 => 'Delete',
 	  );
 	  return $actions;
 	}
@@ -175,17 +182,8 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
             //Deactivate Bulk
 			if( isset( $_POST['plugin'] ) ) {
 
-				deactivate_plugins( $_POST['plugin'] );
-
-				//We update status
-				foreach( $this->plugins as $plugin_id => $plugin ) {
-					//We check if the plugin is active (if is not installed we cannot deactivate it)
-					if( in_array( $plugin['file_path'], $_POST['plugin'] ) && 'active' == $plugin['status'] ) {
-
-						$this->plugins[$plugin_id]['status'] = 'inactive';
-
-					}
-				}
+				$this->deactive_bulk( $_POST['plugin'] );
+			
 			}
 
             // Flush plugins cache so we can make sure that the installed plugins list is always up to date.
@@ -195,15 +193,57 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 
 		if( 'delete' === $this->current_action() ) {
 
-			// Delete a single plugin
-            delete_plugins( array($this->plugins[$_GET['plugin_id']]['file_path'] ) );
 
-            //We change status
-            $this->plugins[$_GET['plugin_id']]['status'] = 'not-installed';
+			// Delete a single plugin
+			if( !isset( $_POST['plugin'] ) && isset( $_GET['plugin_id'] ) && 'delete' == $_GET['action'] ) {
+
+				delete_plugins( array($this->plugins[$_GET['plugin_id']]['file_path'] ) );
+
+         	   	//We change status
+          		$this->plugins[$_GET['plugin_id']]['status'] = 'not-installed';
+
+            }	
+
+            // Delete Bulk
+			if( isset( $_POST['plugin'] ) ) {
+
+				$this->deactive_bulk( $_POST['plugin'] );
+				@delete_plugins( $_POST['plugin'] );
+
+				//We update status
+				foreach( $this->plugins as $plugin_id => $plugin ) {
+					//We check if the plugin is inactive (if is not inactive we cannot uninstall it)
+					if( in_array( $plugin['file_path'], $_POST['plugin'] ) && 'inactive' == $plugin['status'] ) {
+
+						$this->plugins[$plugin_id]['status'] = 'not-installed';
+
+					}
+				}
+			}
 
             // Flush plugins cache so we can make sure that the installed plugins list is always up to date.
             wp_cache_flush();
 
+		}	
+	}
+
+	/**
+	 * Fucntion to deativate plugins in bulk. Used in deactivate action and delete action
+	 * @param  array $plugins Array of plugin passed in posts var
+	 * @return void
+	 */
+	private function deactive_bulk( $plugins ) {
+
+		deactivate_plugins( $plugins );
+
+		//We update status
+		foreach( $this->plugins as $plugin_id => $plugin ) {
+			//We check if the plugin is active (if is not installed we cannot deactivate it)
+			if( in_array( $plugin['file_path'], $plugins ) && 'active' == $plugin['status'] ) {
+
+				$this->plugins[$plugin_id]['status'] = 'inactive';
+
+			}
 		}	
 	}
 

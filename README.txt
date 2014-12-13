@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer
 Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 1.0.5
+Tested up to: 4.0.1
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,18 @@ With the Wpfavs plugin you can install, delete or active multiple plugins in jus
 Once installed simple go to Tools -> Wpfavs 
 
 You can read a tutorial on how to use the plugin in [Tuts+](http://code.tutsplus.com/articles/install-multiple-wordpress-plugins-in-just-a-few-clicks--cms-21311)
+
+= Wordpress Popups  =
+
+Best popups plugin ever ([http://wp.timersys.com/popups/](http://wp.timersys.com/popups/?utm_source=wsi-free-plugin&utm_medium=readme))
+
+= Wordpress Social Invitations  =
+
+Enhance your site by letting your users send Social Invitations ([http://wp.timersys.com/wordpress-social-invitations/](http://wp.timersys.com/wordpress-social-invitations/?utm_source=social-popup&utm_medium=readme))
+
+= Increase your twitter followers  =
+
+Increase your Twitter followers with Twitter likebox Plugin ([http://wordpress.org/extend/plugins/twitter-like-box-reloaded/](http://wordpress.org/extend/plugins/twitter-like-box-reloaded/))
 
 
 
@@ -72,6 +84,11 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 3. When you run a list you get to the plugins of the Wpfav
 
 == Changelog ==
+
+= 1.0.6 =
+
+* Added the option to bulk delete / uninstall plugins
+* Fixed some notices errors
 
 = 1.0.5 =
 
