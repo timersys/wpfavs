@@ -29,23 +29,27 @@ class Wpfavs_Table extends WP_List_Table {
 	}
 
 	/**
+	 * Returns an array of columns.
+	 * @return array
+	 */
+	function get_columns() {
+		$columns = array(
+			'title' 	=> 'Title',
+			'description' 	=> 'Description',
+			'plugins' 	=> 'Plugins in List',
+		);
+		return $columns;
+	}
+
+	/**
 	 * Prepare all the items to be displayed
 	 * @return void
 	 */
 	function prepare_items() {
-	  
-		
 		$hidden 				= array();
 		$sortable 				= array();
-		$columns = array(
-			'title' 		=> 'Title', 
-			'description'	=> 'Description',		
-			'plugins'		=> 'Plugins in List',		
-		);
-
+		$columns 				= $this->get_columns();
 		$this->_column_headers 	= array($columns, $hidden, $sortable);
-
-	
 	}
 
 	/**
