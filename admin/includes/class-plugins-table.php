@@ -36,6 +36,21 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 		$this->plugins 			= $items;
 	}
 
+        /**
+         * Returns an array of columns.
+         * @return array
+         */
+	function get_columns(){
+		$columns = array(
+			'cb'        		=> '<input type="checkbox" />',
+			'title' 		=> 'Plugin Name', 
+			'version'		=> 'Plugin Version',
+			'last_updated'		=> 'Last Updated',
+			'status'		=> 'Status',
+  		);
+  		return $columns;
+	}
+
 	/**
 	 * Prepare all the items to be displayed
 	 * @return void
@@ -44,14 +59,8 @@ class Wpfavs_Plugins_Table extends WP_List_Table {
 	  
 		$hidden 				= array();
 		$sortable 				= array();
-		$columns = array(
-			'cb'        	=> '<input type="checkbox" />',
-			'title' 		=> 'Plugin Name', 
-			'version'		=> 'Plugin Version',
-			'last_updated'	=> 'Last Updated',
-			'status'		=> 'Status',
-			
-		);
+		$columns 				= $this->get_columns();
+
 		//handle bulk and single actions
 		$this->handle_actions();
 
