@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer
 Requires at least: 3.6
-Tested up to: 4.0.1
-Stable tag: 1.0.6
+Tested up to: 4.3
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,10 @@ You can read a tutorial on how to use the plugin in [Tuts+](http://code.tutsplus
 = Wordpress Popups  =
 
 Best popups plugin ever ([http://wp.timersys.com/popups/](http://wp.timersys.com/popups/?utm_source=wsi-free-plugin&utm_medium=readme))
+
+= HTML Email Templates =
+
+Check how to [send beautiful html emails](https://wordpress.org/plugins/email-templates/) in WordPress
 
 = Wordpress Social Invitations  =
 
@@ -84,6 +88,10 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 3. When you run a list you get to the plugins of the Wpfav
 
 == Changelog ==
+
+= 1.0.7 =
+
+* Fixed compatibility issue with WP 4.3 - Thanks to Rob C
 
 = 1.0.6 =
 
