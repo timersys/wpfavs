@@ -1,9 +1,9 @@
 === Wp Favs - Bulk plugin installation ===
 Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
-Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer
+Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer, install plugins
 Requires at least: 3.6
-Tested up to: 4.3
+Tested up to: 4.5.1
 Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
