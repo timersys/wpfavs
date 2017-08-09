@@ -44,7 +44,7 @@
 			<div class="postbox ">
 				<h3 class="hndle"><span><?php _e( 'Leave Feedback', $this->plugin_slug );?></span></h3>
 				<div class="inside">
-					<p><?php echo sprintf( __( 'Please send me your feedback by going to <a href="%s">Timersys site</a>', $this->plugin_slug ), 'http://wp.timersys.com/contact-us/');?></p>
+					<p><?php echo sprintf( __( 'Please send me your feedback <a href="%s">here</a>', $this->plugin_slug ), 'https://wpfavs.com/contact-us/');?></p>
 				</div>
 			</div>		
 

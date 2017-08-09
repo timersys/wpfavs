@@ -12,7 +12,7 @@
 ?>
 
 
-	<p><?php _e( sprintf('If you are new to Wp favs, first go to <a href="%1$s">%1$s</a> and create your first list! Or you can <a href="%2$s">browse</a> the existing Wp favs', 'http://wpfavs.com', 'http://wpfavs.com/browse/'), $this->plugin_slug );?></p>
+	<p><?php _e( sprintf('If you are new to Wp favs, first go to <a href="%1$s" target="_blank">%1$s</a> and create your first list! Or you can <a href="%2$s" target="_blank">browse</a> the existing Wp favs', 'https://wpfavs.com', 'http://wpfavs.com/wpfavs/'), $this->plugin_slug );?></p>
 
 
 	<form name="wpfavs-form" id="wpfavs-form" action="post">
@@ -33,11 +33,9 @@
 			<img src="<?php echo site_url('wp-admin/images/wpspin_light.gif');?>" alt="loading" class="spin"/>
 		</div>
 		<div id="wpfav-response">
-			<?php if( !empty($this->api_key_response) ) {
-				
-				Wpfavs_Admin::print_table( $this->api_key_response );
-
-			}
+			<?php
+			if( !empty($this->api_key_response) )
+				$this->print_wpfavs( $this->api_key_response );
 			?>
 		</div>
 

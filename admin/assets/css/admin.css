@@ -25,3 +25,23 @@
 #wpfav-response .widefat{
 	clear: left;
 }
+
+.wpfav-box .title h3 .button-primary{
+	font-size: 11px;
+	line-height: 22px;
+	height: 22px;
+}
+.wpfav-box .title h3{
+	font-size: 14px;
+	padding: 8px 12px;
+	margin: 0;
+	line-height: 1.4;
+	border-bottom: 1px solid #eee;
+}
+span.plugin-name {
+	background: #eee;
+	margin-right: 10px;
+	padding: 3px 6px;
+	border-radius: 9px;
+	line-height: 2;
+}

@@ -1,28 +1,35 @@
-=== Wp Favs - Bulk plugin installation ===
+=== Wp Favs - Plugin Manager ===
 Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer, install plugins
 Requires at least: 3.6
-Tested up to: 4.5.1
-Stable tag: 1.0.7.1
+Tested up to: 4.8
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Wpfavs is a bulk plugin installation / activation tool that let you import your plugins lists from http://wpfavs.com 
+Wpfavs is a plugin manager tool that let's you import your plugins lists from https://wpfavs.com
 
 == Description ==
 
-Wp Favs is a bulk plugin installation / activation tool that let you import your plugins lists (aka Wp Favs) from [http://wpfavs.com](http://wpfavs.com) or get your favorites plugins from WordPress.org
+Wp Favs is a bulk plugin manager tool that let's you import your plugins lists (aka Wp Favs) from [https://wpfavs.com](https://wpfavs.com) or get your favorites plugins from WordPress.org
 
-The plugin is and will remain free and no registration is needed.
-
-You can either go to Wp Favs site and [register an account](http://wpfavs.com/wp-login.php?action=register) to create your own lists or you can [browse](http://wpfavs.com/wpfavs) other users existing lists and use them with quick key.
+You can either go to Wp Favs site and [register an account](https://wpfavs.com/register) to create your own lists or you can [browse](https://wpfavs.com/wpfavs) other users existing lists and use them with quick token key.
 
 With the Wpfavs plugin you can install, delete or active multiple plugins in just a few clicks. It's a great tool for developers that install dozens of Wordpress Sites every month.
 
 Once installed simple go to Tools -> Wpfavs 
 
 You can read a tutorial on how to use the plugin in [Tuts+](http://code.tutsplus.com/articles/install-multiple-wordpress-plugins-in-just-a-few-clicks--cms-21311)
+
+> <strong>Premium Version</strong><br>
+>
+> Check the **new premium version** available in [https://wpfavs.com](https://wpfavs.com/register)
+>
+> * Upload custom plugins
+> * Connect your codecannyon account and import purchased plugins
+> * Powerful API
+> * Many features to come
 
 = Wordpress Popups  =
 
@@ -31,16 +38,6 @@ Best popups plugin ever ([http://wp.timersys.com/popups/](http://wp.timersys.com
 = HTML Email Templates =
 
 Check how to [send beautiful html emails](https://wordpress.org/plugins/email-templates/) in WordPress
-
-= Wordpress Social Invitations  =
-
-Enhance your site by letting your users send Social Invitations ([http://wp.timersys.com/wordpress-social-invitations/](http://wp.timersys.com/wordpress-social-invitations/?utm_source=social-popup&utm_medium=readme))
-
-= Increase your twitter followers  =
-
-Increase your Twitter followers with Twitter likebox Plugin ([http://wordpress.org/extend/plugins/twitter-like-box-reloaded/](http://wordpress.org/extend/plugins/twitter-like-box-reloaded/))
-
-
 
 == Installation ==
 
@@ -88,6 +85,9 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 3. When you run a list you get to the plugins of the Wpfav
 
 == Changelog ==
+
+= 1.1 =
+* Plugin almost completely recoded for new version of Wp Favs site
 
 = 1.0.7.1 =
 

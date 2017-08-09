@@ -24,7 +24,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.0.7.1';
+	const VERSION = '1.1';
 	
 	/**
 	 * API Url to do the remote calls
@@ -33,7 +33,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	public $api_url = 'http://wpfavs.com/';
+	public $api_url = 'https://wpfavs.com/api/v1';
 
 	/**
 	 * The variable name is used as the text domain when internationalizing strings
@@ -45,6 +45,8 @@ class Wpfavs_Admin {
 	 * @var      string
 	 */
 	var $plugin_slug = 'wpfavs';
+
+	protected $wpfav_id = null;
 
 	/**
 	 * Instance of this class.
@@ -121,6 +123,11 @@ class Wpfavs_Admin {
 		//load options
 		$this->load_wpfav_options();
 
+		//TGM
+		require_once dirname( __FILE__ ) . '/includes/class-tgm-plugin-activation.php';
+
+		add_action( 'tgmpa_register', [$this,'register_required_plugins'] );
+
 	}
 
 	/**
@@ -176,14 +183,8 @@ class Wpfavs_Admin {
 			$this->api_key 			= get_option( $this->plugin_slug . 'wpfav_apikey' );
 			$this->quick_key 		= get_option( $this->plugin_slug . 'wpfav_quickkey' );
 			$this->wp_user 			= get_option( $this->plugin_slug . 'wpfav_wpuser' );
-			$this->api_key_response = unserialize( get_transient( $this->plugin_slug . 'wpfav_apikey_response') );
-			$this->wp_response 		= unserialize( get_transient( $this->plugin_slug . 'wpfav_wp_response') );
-			//we update installed plugins
-			if( !empty( $this->api_key_response ) )
-				$this->populate_file_path( $this->api_key_response );
+			$this->api_key_response = json_decode( get_transient( 'wpfav_install'),TRUE );
 
-			if( !empty( $this->wp_response ) )
-				$this->populate_file_path( $this->wp_response );
 
 		}
 	}
@@ -250,10 +251,12 @@ class Wpfavs_Admin {
 		include_once( 'views/header.php' );
 
 		//If we are running an action, we are running the plugin lists
-		if( isset( $_GET['action'] ) )
+		if( isset( $_GET['run_wpfav'] ) )
 		{
+			$this->wpfav_id = esc_attr($_GET['run_wpfav']);
 
-			include_once( 'views/run-list.php' );
+		#	$html = ob_get_clean();
+		#	include_once( 'views/run-list.php' );
 			
 		} else {
 
@@ -262,6 +265,66 @@ class Wpfavs_Admin {
 		}	
 
 		include_once( 'views/footer.php' );
+	}
+
+	public function register_required_plugins(){
+
+		$cache = json_decode(get_transient('wpfav_install'), true);
+
+		if($cache && isset($cache['id']) )
+			$wpfav = $cache;
+		else {
+			$wpfav_id = filter_input(INPUT_GET,'wpfav_id',FILTER_SANITIZE_NUMBER_INT);
+			$type = filter_input(INPUT_GET,'type',FILTER_SANITIZE_STRING);
+			if( empty($wpfav_id) || ! in_array($type, ['wpfav_token_key_response','wpfav_apikey_response','wpfav_wp_response']))
+				return;
+			$data = get_transient('wpfav_install');
+			$wpfavs = json_decode($data,true);
+
+			if( $type == 'wpfav_apikey_response') {
+				$wpfav = array_values(array_filter( $wpfavs, function( $v ) use ($wpfav_id){
+
+					if ( $v['id'] == $wpfav_id )
+						return true;
+				}))[0];
+			} elseif( $type == 'wpfav_wp_response') {
+				$wpfav = $wpfavs[7331];
+			} else {
+				$wpfav = $wpfavs;
+			}
+			if(empty($wpfav))
+				return;
+			// save for next screen
+			set_transient( 'wpfav_install', json_encode($wpfav), DAY_IN_SECONDS);
+		}
+		/**
+		 * Filter TGM args to change page title
+		 * @param $args
+		 */
+		add_filter('tgmpa_admin_menu_args',  function($args) use($wpfav) {
+			$args['page_title'] = $wpfav['name'];
+			return $args;
+        });
+		$plugins = [];
+		if( isset($wpfav['plugins'])) {
+			foreach ( $wpfav['plugins'] as $plugin ) {
+				$plugins[] = [
+					'name'      => $plugin['name'],
+					'slug'      => $plugin['slug'],
+					'source'    => $plugin['data']['download_link'],
+				];
+			}
+		}
+
+
+		$config = array(
+			'id'           => 'wpfavs',                 // Unique ID for hashing notices for multiple instances of TGMPA.
+			'menu'         => 'wpfavs-install', // Menu slug.
+			'parent_slug'  => 'tools.php',            // Parent menu slug.
+			'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+			'message'      => '<p>'.$wpfav['description'].'</p></p>',
+		);
+		tgmpa( $plugins, $config );
 	}
 
 	/**
@@ -295,14 +358,9 @@ class Wpfavs_Admin {
         //apikey
         $wpfav_apikey = $_POST['api_key'];
 
-        // Data to send to the API
-		$api_params = array(
-			'api_key' 		=> $wpfav_apikey,
-			'wpfav_action'	=> 'wpfav_get_lists',
-		);
 
 		// Call the API
-		$response = wp_remote_get( add_query_arg( $api_params, $this->api_url), array( 'timeout' => 15, 'sslverify' => false ) );
+		$response = wp_remote_get( $this->api_url .'/wpfavs/'.$wpfav_apikey );
 
 		
 		// Make sure there are no errors
@@ -319,14 +377,13 @@ class Wpfavs_Admin {
 		if( isset( $response['error'] ) ) {
   			echo self::message_box( $response['error'] );
   			die();
-		} 
-
+		}
 		// If we made it to here let's save it and load our table class
 		update_option( $this->plugin_slug . 'wpfav_apikey', $wpfav_apikey );
 
-		set_transient( $this->plugin_slug . 'wpfav_apikey_response', serialize($response), 15 * DAY_IN_SECONDS );
+		set_transient( 'wpfav_install', json_encode($response), 15 * DAY_IN_SECONDS );
 
-		self::print_table( $response );
+		$this->print_wpfavs( $response );
 
 		die();
 	}
@@ -346,14 +403,8 @@ class Wpfavs_Admin {
         //quickkey
         $wpfav_quickkey = $_POST['api_key'];
 
-        // Data to send to the API
-		$api_params = array(
-			'api_key' 		=> $wpfav_quickkey,
-			'wpfav_action'	=> 'wpfav_get_quick_list',
-		);
-
 		// Call the API
-		$response = wp_remote_get( add_query_arg( $api_params, $this->api_url), array( 'timeout' => 15, 'sslverify' => false ) );
+		$response = wp_remote_get( $this->api_url .'/wpfav/'.$wpfav_quickkey );
 
 
 		// Make sure there are no errors
@@ -376,9 +427,9 @@ class Wpfavs_Admin {
 		// If we made it to here let's save it and load our table class
 		update_option( $this->plugin_slug . 'wpfav_quickkey', $wpfav_quickkey );
 
-		set_transient( $this->plugin_slug . 'wpfav_apikey_response', serialize($response), 15 * DAY_IN_SECONDS );
+		set_transient( 'wpfav_install', json_encode($response), 15 * DAY_IN_SECONDS );
 
-		self::print_table( $response );
+		$this->print_wpfavs( $response );
 
 		die();
 	}
@@ -416,26 +467,26 @@ class Wpfavs_Admin {
   			echo self::message_box( $error_string );
   			die();
 		}
+		$i=0;
 		// prepare plugins array
 		foreach( $response->plugins as $plugin ) {
 			$i++;
 			$temp_a = array(
 				'id' 			=> $i,
-				'title' 		=> $plugin->name,
+				'name' 		    => $plugin->name,
 		        'slug' 			=> $plugin->slug,
 		        'link' 			=> 'http://wpfavs.com/plugin/' . $plugin->slug .'/',
-		        'dlink' 		=> 'https://downloads.wordpress.org/plugin/' . $plugin->slug . '.' . $plugin->version . '.zip',
+		        'download_link' => 'https://downloads.wordpress.org/plugin/' . $plugin->slug . '.' . $plugin->version . '.zip',
 		        'last_updated' 	=> 'unknown',
 		        'version' 		=> $plugin->version
 				);
 			$plugins[$i] = $temp_a;
 			
 		}
-
 		$response = apply_filters( 'wpfav_wp_user_response',
 			array(
 				7331 => array(
-							'title' 		=> __( 'Wordpress.org Favorites', $this->plugin_slug ),
+							'name' 		=> __( 'Wordpress.org Favorites', $this->plugin_slug ),
 							'id' 			=> 7331,
 							'description' 	=> __( sprintf('%s\'s favorites plugins in Wordpress.org', $wpfav_wp_username ), $this->plugin_slug ),
 							'link' 			=> 'https://profiles.wordpress.org/' . $wpfav_wp_username,
@@ -448,28 +499,58 @@ class Wpfavs_Admin {
 		update_option( $this->plugin_slug . 'wpfav_wpuser', $wpfav_wp_username );
 
 		//Save to the db
-		set_transient( $this->plugin_slug . 'wpfav_wp_response', serialize($response), 3 * DAY_IN_SECONDS );
+		set_transient( 'wpfav_install', json_encode($response), 3 * DAY_IN_SECONDS );
 
-		self::print_table( $response );
+		$this->print_wpfavs( $response );
 
 		die();
 	}
 
 	/**
 	 * Prints a wp table with all the wpfavs
-	 * @param  array $columns columns that we are going to display
-	 * @param  array $items   items that we are going to display
 	 * @return void           prints the wp table
 	 */
-	public static function print_table ( $items ) {
+	public function print_wpfavs ( $wpfavs ) {
 
-		require_once( 'includes/class-wpfavs-table.php');
+		$type = 'wpfav_apikey_response';
+		// check if we are retrieving single wpfav or users favorites
+		if( !isset($wpfavs[0] ) && !isset($wpfavs[7331] )){
+			$wpfavs = [$wpfavs];
+			$type = 'wpfav_token_key_response';
+		}
+		if( isset($wpfavs[7331] ) ){
+			$type = 'wpfav_wp_response';
+		}
+		if( $wpfavs ){
+			foreach ($wpfavs as $wpfav) {
+				if( $wpfav['id'] == '7331')
+					$url = $wpfav['link'].'#content-favorites';
+				else
+					$url = "https://wpfavs.com/wpfavs/" . $wpfav['slug'];
+				?>
+				<div class="wpfav-box postbox ">
+					<div class="title">
+						<h3 class=""><a href="<?= $url;?>" title="<?= _e('View it on Wpfavs.com','wpfavs');?>" target="_blank">
+							<span><?= $wpfav['name'];?></span>
+						</a> - <a href="<?= admin_url('tools.php?page=wpfavs-install&wpfav_id='.$wpfav['id']).'&type='.$type;?>" title="<?= _e('Run this list','wpfavs');?>" class="button-primary">
+							Run this list
+						</a></h3>
+						<div class="inside">
+							<?php
+							echo '<p>'.$wpfav['description'].'</p>';
+							if(!empty($wpfav['plugins'])){
+								foreach ($wpfav['plugins'] as $plugin) {
+									echo '<span class="plugin-name">'.$plugin['name'].'</span>';
+								}
+							}
+							?>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+		}
 
-		$myList = new Wpfavs_Table( array('screen' => 'wpfavs' ) );
-
-		$myList->set_items( $items );
-		$myList->prepare_items();
-		$myList->display(); 
 	}
 
 	/**
@@ -581,4 +662,6 @@ class Wpfavs_Admin {
 
 		return false;
     }
+
+
 }
