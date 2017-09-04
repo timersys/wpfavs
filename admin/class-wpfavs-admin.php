@@ -24,8 +24,8 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.1';
-	
+	const VERSION = '1.1.1';
+
 	/**
 	 * API Url to do the remote calls
 	 *
@@ -126,7 +126,7 @@ class Wpfavs_Admin {
 		//TGM
 		require_once dirname( __FILE__ ) . '/includes/class-tgm-plugin-activation.php';
 
-		add_action( 'tgmpa_register', [$this,'register_required_plugins'] );
+		add_action( 'tgmpa_wpfav_register', [$this,'register_required_plugins'] );
 
 	}
 
@@ -301,7 +301,7 @@ class Wpfavs_Admin {
 		 * Filter TGM args to change page title
 		 * @param $args
 		 */
-		add_filter('tgmpa_admin_menu_args',  function($args) use($wpfav) {
+		add_filter('tgmpa_wpfav_admin_menu_args',  function($args) use($wpfav) {
 			$args['page_title'] = $wpfav['name'];
 			return $args;
         });
@@ -324,7 +324,7 @@ class Wpfavs_Admin {
 			'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
 			'message'      => '<p>'.$wpfav['description'].'</p></p>',
 		);
-		tgmpa( $plugins, $config );
+		tgmpa_wpfav( $plugins, $config );
 	}
 
 	/**
@@ -452,8 +452,8 @@ class Wpfavs_Admin {
 
         // Include plugins api
         include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-		$response = plugins_api( 'query_plugins', array( 'user' => $wpfav_wp_username ) );
-		
+		$response = plugins_api( 'query_plugins', array( 'user' => $wpfav_wp_username ,'per_page' => 100) );
+
 		// Make sure there are no errors
 		if ( is_wp_error( $response ) ) {
 			$error_string = $response->get_error_message();

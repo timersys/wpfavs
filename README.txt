@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer, install plugins
 Requires at least: 3.6
 Tested up to: 4.8
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,9 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 3. When you run a list you get to the plugins of the Wpfav
 
 == Changelog ==
+
+= 1.1.1 =
+* Renamed functions that clashed with other plguins/themes using tgm class
 
 = 1.1 =
 * Plugin almost completely recoded for new version of Wp Favs site
