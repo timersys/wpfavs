@@ -24,7 +24,7 @@ class Wpfavs_Admin {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.1.1';
+	const VERSION = WPFAVS_VERSION;
 
 	/**
 	 * API Url to do the remote calls

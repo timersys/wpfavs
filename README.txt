@@ -1,10 +1,10 @@
 === Wp Favs - Plugin Manager ===
 Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
-Tags: plugins, multiple plugins, bulk plugin installation, favorite plugins, install multiple plugins, multi plugin installer, install plugins
+Tags: plugins,multiple plugins,bulk plugin installation,favorite plugins,install multiple plugins,multi plugin installer,install plugins,plugin manager,wpcore,wp core
 Requires at least: 3.6
 Tested up to: 4.8
-Stable tag: 1.1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,10 @@ Yes, it's totally free and it will remain free. No premium addons, or stuff will
 3. When you run a list you get to the plugins of the Wpfav
 
 == Changelog ==
+
+= 1.2=
+* Option to export installed/active plugins
+* Minor bugfixes
 
 = 1.1.1 =
 * Renamed functions that clashed with other plguins/themes using tgm class
