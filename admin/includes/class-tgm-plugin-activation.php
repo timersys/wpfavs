@@ -3796,6 +3796,11 @@ if ( ! function_exists( 'tgmpa_wpfav_load_bulk_installer' ) ) {
 							parent::add_strings();
 							/* translators: 1: plugin name, 2: action number 3: total number of actions. */
 							$this->upgrader->strings['skin_before_update_header'] = __( 'Updating Plugin %1$s (%2$d/%3$d)', 'tgmpa_wpfav' );
+							$this->upgrader->strings['skin_update_successful'] = esc_html__( '%1$s updated successfully.', 'tgmpa_wpfav' ) . ' <a href="#" class="hide-if-no-js" onclick="%2$s"><span>' . esc_html__( 'Show Details', 'tgmpa_wpfav' ) . '</span><span class="hidden">' . esc_html__( 'Hide Details', 'tgmpa_wpfav' ) . '</span>.</a>';
+							$this->upgrader->strings['skin_update_failed_error'] = __( 'An error occurred while updating %1$s: <strong>%2$s</strong>.', 'tgmpa_wpfav' );
+							/* translators: 1: plugin name. */
+							$this->upgrader->strings['skin_update_failed'] = __( 'Couldn\'t update %1$s failed.', 'tgmpa_wpfav' );
+
 						} elseif ( 'uninstall' === $this->options['install_type'] ) {
 							/* translators: 1: plugin name, 2: error message. */
 							$this->upgrader->strings['skin_update_failed_error'] = __( 'An error occurred while uninstalling %1$s: <strong>%2$s</strong>.', 'tgmpa_wpfav' );
