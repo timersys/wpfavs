@@ -3792,8 +3792,8 @@ if ( ! function_exists( 'tgmpa_wpfav_load_bulk_installer' ) ) {
 					 * @since 2.2.0
 					 */
 					public function add_strings() {
+						parent::add_strings();
 						if ( 'update' === $this->options['install_type'] ) {
-							parent::add_strings();
 							/* translators: 1: plugin name, 2: action number 3: total number of actions. */
 							$this->upgrader->strings['skin_before_update_header'] = __( 'Updating Plugin %1$s (%2$d/%3$d)', 'tgmpa_wpfav' );
 							$this->upgrader->strings['skin_update_successful'] = esc_html__( '%1$s updated successfully.', 'tgmpa_wpfav' ) . ' <a href="#" class="hide-if-no-js" onclick="%2$s"><span>' . esc_html__( 'Show Details', 'tgmpa_wpfav' ) . '</span><span class="hidden">' . esc_html__( 'Hide Details', 'tgmpa_wpfav' ) . '</span>.</a>';
@@ -3833,7 +3833,7 @@ if ( ! function_exists( 'tgmpa_wpfav_load_bulk_installer' ) ) {
 								// Default installation strings.
 								$this->upgrader->strings['skin_upgrade_start'] = __( 'The installation process is starting. This process may take a while on some hosts, so please be patient.', 'tgmpa_wpfav' );
 								/* translators: 1: plugin name. */
-								$this->upgrader->strings['skin_update_successful'] = esc_html__( '%1$s installed successfully.', 'tgmpa_wpfav' ) . ' <a href="#" class="hide-if-no-js" onclick="%2$s"><span>' . esc_html__( 'Show Details', 'tgmpa_wpfav' ) . '</span><span class="hidden">' . esc_html__( 'Hide Details', 'tgmpa_wpfav' ) . '</span>.</a>';
+								$this->upgrader->strings['skin_update_successful'] = esc_html__( '%1$s installed successfully.', 'tgmpa_wpfav' );
 								$this->upgrader->strings['skin_upgrade_end']       = __( 'All installations have been completed.', 'tgmpa_wpfav' );
 								/* translators: 1: plugin name, 2: action number 3: total number of actions. */
 								$this->upgrader->strings['skin_before_update_header'] = __( 'Installing Plugin %1$s (%2$d/%3$d)', 'tgmpa_wpfav' );
