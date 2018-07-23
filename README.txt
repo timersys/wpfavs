@@ -3,7 +3,7 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: plugins,multiple plugins,bulk plugin installation,favorite plugins,install multiple plugins,multi plugin installer,install plugins,plugin manager,wpcore,wp core
 Requires at least: 3.6
-Tested up to: 4.8
+Tested up to: 4.9.7
 Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
